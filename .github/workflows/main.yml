@@ -1,0 +1,29 @@
+name: Run macOS Environment Test
+
+# This tells GitHub to run the test every time you update your files
+on: [push, workflow_dispatch]
+
+jobs:
+  macos-test:
+    # This instructs GitHub to spin up a virtual Mac server
+    runs-on: macos-latest
+
+    steps:
+    # Step 1: Pulls your repository files into the virtual Mac
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    # Step 2: Run basic Mac terminal tests
+    - name: Check macOS System Information
+      run: |
+        echo "Checking operating system version:"
+        sw_vers
+        echo "Checking pre-installed software versions:"
+        python3 --version
+        node --version
+        git --version
+
+    # Step 3: Run your custom code (Optional)
+    # If you uploaded a script named "myscript.py", uncomment the line below:
+    # - name: Run my python script
+    #   run: python3 myscript.py
